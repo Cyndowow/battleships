@@ -17,6 +17,14 @@ describe("ship functions", () => {
         expect(testShip.hits).toContain(2);
     })
 
+    test("ship sinks", () => {
+        testShip.hit(1);
+        testShip.hit(2);
+        testShip.hit(3);
+        testShip.hit(4);
+        testShip.hit(5);
+        expect(testShip.isSunk()).toBe(true);
+    })
 
 })
 

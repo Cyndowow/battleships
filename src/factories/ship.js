@@ -6,5 +6,8 @@ export default class Ship {
     hit(index) {
         this.hits.push(index);
     }
+    isSunk() {
+        return this.hits.length === this.length;
+    }
 }
 
