@@ -16,5 +16,8 @@ export default class Ship {
     changeDirection() {
         this.direction === "horizontal" ? (this.direction = "vertical") : (this.direction = "horizontal");
     }
+    getDirection() {
+        return this.direction;
+    }
 }
 
