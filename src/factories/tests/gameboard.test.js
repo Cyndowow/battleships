@@ -103,4 +103,52 @@ describe("Gameboard", () => {
             expect(actual).toBe(true);
         })
     })
+
+    describe("receive attack", () => {
+        const gameboard = Gameboard();
+        const carrier = new Ship("carrier");
+        const battleship = new Ship("battleship");
+        gameboard.placeShip(carrier, 2, 0);
+        battleship.changeDirection();
+        gameboard.placeShip(battleship, 3, 2);
+        gameboard.receiveAttack(0, 0);
+
+        test("attack carrier at index 0", () => {
+            gameboard.receiveAttack(2, 0);
+            const actual = carrier.getHits();
+            expect(actual).toEqual(["hit", null, null, null, null]);
+        })
+        test("attack carrier at index 3", () => {
+            gameboard.receiveAttack(2, 3);
+            const actual = carrier.getHits();
+            expect(actual).toEqual(["hit", null, null, "hit", null]);
+        })
+        test("miss", () => {
+            const actual = gameboard.getBoard()[0][0];
+            expect(actual).toBe("miss");
+        })
+        test("hit at cell (2, 0", () => {
+            const actual = gameboard.getBoard()[2][0];
+            expect(actual).toEqual("hit");
+        })
+        test("miss at cell 4, 0", () => {
+            gameboard.receiveAttack(4, 0);
+            const actual = gameboard.getBoard()[4][0];
+            expect(actual).toBe("miss");
+        })
+    })
+
+    describe("all ships are sunk", () => {
+        const gameboard = Gameboard();
+        const submarine = new Ship("submarine");
+        const destroyer = new Ship("destroyer");
+        gameboard.placeShip(submarine, 2, 0);
+        destroyer.changeDirection();
+        gameboard.placeShip(destroyer, 3, 2);
+    
+        test("no ship is sunk", () => {
+            const actual = gameboard.areAllShipsSunk();
+            expect(actual).toBe(false);
+        })
+    })
 }) 

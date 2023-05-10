@@ -4,14 +4,21 @@ export default class Ship {
     constructor(type) {
         this.id = type;
         this.length = SHIP_LENGTHS[type];
-        this.hits = [];
+        this.hits = Array(this.length).fill(null);
         this.direction = "horizontal";
     }
     hit(index) {
-        this.hits.push(index);
+        this.hits[index] = "hit"
+    }
+    getHits() {
+        return this.hits;
     }
     isSunk() {
-        return this.hits.length === this.length;
+        if (this.hits.every((h) => h === "hit")) {
+            return true;
+        } else {
+            return false;
+        }
     }
     changeDirection() {
         this.direction === "horizontal" ? (this.direction = "vertical") : (this.direction = "horizontal");

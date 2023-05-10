@@ -48,11 +48,27 @@ const Gameboard = () => {
         }
     }
 
+    const receiveAttack = (y, x) => {
+        //determine if attack hits a ship
+        if (board[y][x] === null) {
+            board[y][x] = "miss";
+        } else if (board[y][x].ship) {
+            //call hit function on the correct ship
+            board[y][x].ship.hit(board[y][x].index);
+            board[y][x] = "hit";
+        }
+        return board[y][x];
+    }
+
+    const areAllShipsSunk = () => placedShips.every((ship) => ship.isSunk());
+    
+
     return {
         getBoard,
         areAllShipsPlaced,
         placeShip,
-
+        receiveAttack,
+        areAllShipsSunk
     }
 }
 

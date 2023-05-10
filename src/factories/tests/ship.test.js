@@ -5,7 +5,7 @@ describe("ship functions", () => {
     
     
     test("return ship id, length, hits", () => {
-        expect(testShip).toEqual({ id: "carrier", length: 5, hits: [], direction: "horizontal" })
+        expect(testShip).toEqual({ id: "carrier", length: 5, hits: [null, null, null, null, null], direction: "horizontal" })
     })
 
     test("change direction", () => {
@@ -16,11 +16,11 @@ describe("ship functions", () => {
     describe("hit function", () => {
         const ship = new Ship("submarine");
         test("no hits", () => {
-            expect(ship.hits).toEqual([]);
+            expect(ship.hits).toEqual([null, null, null]);
         })
         test("one hit", () => {
             ship.hit(2);
-            expect(ship.hits).toEqual([2]);
+            expect(ship.hits).toEqual([null, null, "hit"]);
         })
     })
 
