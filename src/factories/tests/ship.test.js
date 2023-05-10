@@ -5,12 +5,12 @@ describe("ship functions", () => {
     
     
     test("return ship id, length, hits", () => {
-        expect(testShip).toEqual({ id: "carrier", length: 5, hits: [] })
+        expect(testShip).toEqual({ id: "carrier", length: 5, hits: [], direction: "horizontal" })
     })
 
-    test("return ship with 1 hits", () => {
-        testShip.hit(2);
-        expect(testShip.hits).toContain(2);
+    test("change direction", () => {
+        testShip.changeDirection();
+        expect(testShip.direction).toBe("vertical");
     })
 
     describe("hit function", () => {
