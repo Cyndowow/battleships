@@ -1,7 +1,10 @@
+import { SHIP_LENGTHS } from "../helpers/helpers"
+
 export default class Ship {
-    constructor(length) {
-        this.length = length;
-        this.hits = [];
+    constructor(type) {
+        this.id = type;
+        this.length = SHIP_LENGTHS[type];
+        this.hits = []
     }
     hit(index) {
         this.hits.push(index);
