@@ -76,4 +76,31 @@ describe("Gameboard", () => {
             expect(actual).toEqual(null);
         })
     })
+
+    describe("all ships placed", () => {
+        const gameboard = Gameboard();
+        const carrier = new Ship("carrier");
+        const battleship = new Ship("battleship");
+        const cruiser = new Ship("cruiser");
+        const submarine = new Ship("submarine");
+        const destroyer = new Ship("destroyer");
+
+        test("no ships placed", () => {
+            const actual = gameboard.areAllShipsPlaced();
+            expect(actual).toBe(false);
+        })
+        test("some ships placed", () => {
+            gameboard.placeShip(carrier, 0, 0);
+            gameboard.placeShip(battleship, 1, 0);
+            const actual = gameboard.areAllShipsPlaced();
+            expect(actual).toBe(false);
+        })
+        test("all ships placed", () => {
+            gameboard.placeShip(cruiser, 2, 0);
+            gameboard.placeShip(submarine, 3, 0);
+            gameboard.placeShip(destroyer, 4, 0);
+            const actual = gameboard.areAllShipsPlaced();
+            expect(actual).toBe(true);
+        })
+    })
 }) 
