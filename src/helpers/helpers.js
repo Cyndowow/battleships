@@ -15,3 +15,11 @@ export const SHIP_LENGTHS = {
     submarine: 3,
     destroyer: 2,
 };
+
+export const createFleet = (types) => {
+    //create object of ships
+    //fleet = {id: "carrier", length: 5, ...}
+    const fleet = {};
+    types.forEach((type) => (fleet[type] = new Ship(type)));
+    return fleet;
+}
