@@ -151,4 +151,19 @@ describe("Gameboard", () => {
             expect(actual).toBe(false);
         })
     })
+
+    describe("check for placed ships", () => {
+        const gameboard = Gameboard();
+        const submarine = new Ship("submarine");
+        gameboard.placeShip(submarine, 2, 0);
+
+        test("ship exist at coord", () => {
+            const actual = gameboard.checkForShip(2, 0);
+            expect(actual).toBe(true);
+        })
+        test("ship doesnt exist at coord", () => {
+            const actual = gameboard.checkForShip(4, 0);
+            expect(actual).toBe(false);
+        })
+    })
 }) 

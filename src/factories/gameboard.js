@@ -48,13 +48,22 @@ const Gameboard = () => {
         }
     }
 
+    const checkForShip = (y, x) => {
+        if(board[y][x] === null) {
+            return false;
+        } else {
+            return board[y][x];
+        }
+    }
+
     const receiveAttack = (y, x) => {
         //determine if attack hits a ship
-        if (board[y][x] === null) {
+        if (checkForShip(y, x) === false) {
             board[y][x] = "miss";
-        } else if (board[y][x].ship) {
+        } else /*(checkForShip(y, x) === true)*/ {
+            let coord = checkForShip(y, x);
             //call hit function on the correct ship
-            board[y][x].ship.hit(board[y][x].index);
+            coord.ship.hit(board[y][x].index);
             board[y][x] = "hit";
         }
         return board[y][x];
@@ -68,7 +77,8 @@ const Gameboard = () => {
         areAllShipsPlaced,
         placeShip,
         receiveAttack,
-        areAllShipsSunk
+        areAllShipsSunk,
+        checkForShip
     }
 }
 
