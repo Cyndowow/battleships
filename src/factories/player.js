@@ -25,5 +25,8 @@ export default class Player {
             enemyBoard.receiveAttack(y, x)
         }
     }
+    resetFleet() {
+        this.fleet = createFleet(SHIP_TYPES);
+    }
     
 }

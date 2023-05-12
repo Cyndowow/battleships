@@ -1,4 +1,4 @@
-import { SHIP_TYPES } from "../helpers/helpers";
+import { SHIP_TYPES, randCoords } from "../helpers/helpers";
 
 const Gameboard = () => {
     let board = Array(10).fill(null).map(() => Array(10).fill(null));
@@ -70,6 +70,25 @@ const Gameboard = () => {
     }
 
     const areAllShipsSunk = () => placedShips.every((ship) => ship.isSunk());
+
+    const autoPlace = (ship) => {
+        const [y, x] = randCoords();
+        const changeOrientation = Math.random() > 0.5;
+        if (changeOrientation) ship.changeDirection();
+        const placed = placeShip(ship, y, x);
+        if (!placed) autoPlace(ship);
+    }
+
+    const autoPlaceFleet = (fleet) => {
+        for (const ship in fleet) {
+            autoPlace(fleet[ship]);
+        }
+    }
+
+    const reset = () => {
+        board = Array(10).fill(null).map(() => Array(10).fill(null));
+        placedShips = [];
+    }
     
 
     return {
@@ -78,7 +97,9 @@ const Gameboard = () => {
         placeShip,
         receiveAttack,
         areAllShipsSunk,
-        checkForShip
+        checkForShip,
+        autoPlaceFleet,
+        reset
     }
 }
 
