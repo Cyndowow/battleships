@@ -1,3 +1,4 @@
+
 export const SHIP_TYPES = [
     "carrier",
     "battleship",
