@@ -5,7 +5,7 @@ describe("test gameboard creation", () => {
     describe("board", () => {
         let testBoard;
         beforeEach(() => {
-            testBoard = Gameboard();
+            testBoard = new Gameboard();
         })
 
         test("empty board", () => {
@@ -13,24 +13,24 @@ describe("test gameboard creation", () => {
             for (let i = 0; i < 100; i++) {
                 arr.push({hasShip: false, isShot: false});
             } 
-        expect(testBoard.getBoard()).toEqual(arr);
+        expect(testBoard.board).toEqual(arr);
         })
         test("update cell if shot", () => {
             testBoard.receiveAttack(33);
-            expect(testBoard.getBoard()[33].isShot).toBe(true);
+            expect(testBoard.board[33].isShot).toBe(true);
         })
         test("doesnt produce a fake result", () => {
-            expect(testBoard.getBoard()[45].isShot).toBe(false);
+            expect(testBoard.board[45].isShot).toBe(false);
         })
         test("reports if shot missed", () => {
             expect(testBoard.checkIfAttackHit(25)).toBe(false);
         })
         test("confirms a hit", () => {
-            testBoard.getBoard()[33].hasShip = true;
+            testBoard.board[33].hasShip = true;
             expect(testBoard.checkIfAttackHit(33)).toBe(true);
         })
         test("rejects ship that collides with another ship", () => {
-            testBoard.getBoard()[12].hasShip = "carrier";
+            testBoard.board[12].hasShip = "carrier";
             expect(testBoard.checkCollisions([2, 12, 22, 32])).toBe(false);
         })
         test("rejects ship that passes through map edge on x axis", () => {
@@ -40,7 +40,20 @@ describe("test gameboard creation", () => {
             expect(testBoard.checkCollisions([77, 87, 97, 107])).toBe(false);
         })
         test("returns location array of a ship", () => {
-            expect(testBoard.locationArray(23, Ship("destroyer"), "y")).toEqual([23, 33])
+            expect(testBoard.createLocationArray(23, Ship("destroyer"), "y")).toEqual([23, 33])
         })
+        /*test("render opponent board", () => {
+            const arr = [];
+            for (let i = 0; i < 100; i++) {
+                arr.push("empty");
+            }
+
+            testBoard[23] = {hasShip: true, isShot: true};
+            testBoard[79] = {hasShip: false, isShot: true};
+            arr[23] = "hit";
+            arr[79] = "miss";
+            const newBoard = testBoard;
+            expect(testBoard.opponentBoard(newBoard)).toEqual(arr); 
+        })*/
     })
 })

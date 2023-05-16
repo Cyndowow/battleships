@@ -1,39 +1,22 @@
 import {SHIP_LENGTH} from "../helpers/helpers"
 
-const Ship = (type) => {
-    const id = type;
-    const length = SHIP_LENGTH[type];
-    
-    
-    let direction = "horizontal";
-    const getDirection = () => direction;
-
-
-    const hits = Array(length).fill(null);
-    const hit = (index) => (hits[index] = "hit");
-    const getHits = () => hits; 
-
-    const isSunk = () => {
-        if(hits.every((h) => h === "hit")) {
-            return true;
-        } else {
-            return false;
-        }
+export default class Ship {
+    constructor(name, position) {
+        this.name = name;
+        this.position = position;
+        this.hits = [];
+    }    
+    hit(index) {
+        this.hits.push(index);
     }
-
-    return {
-        id,
-        length,
-        getDirection,
-        getHits,
-        isSunk,
-        hit,
+    isSunk() {
+        return this.position.every((positionCell) => 
+            this.hits.includes(positionCell)
+        )
     }
-    
-
 }
 
-export default Ship;
+
 
 
 
