@@ -1,4 +1,4 @@
-import {SHIP_LENGTH} from "../helpers/types"
+import {SHIP_LENGTH} from "../helpers/helpers"
 
 const Ship = (type) => {
     const id = type;
