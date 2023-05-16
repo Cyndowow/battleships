@@ -14,7 +14,11 @@ const Ship = (type) => {
     const getHits = () => hits; 
 
     const isSunk = () => {
-        hits.every((h) => h === "hit");
+        if(hits.every((h) => h === "hit")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     return {
