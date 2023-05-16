@@ -1,17 +1,29 @@
 
 export const SHIP_TYPES = [
-    "carrier",
-    "battleship",
-    "cruiser",
-    "submarine",
-    "destroyer"
+    {
+        name: "carrier",
+        length: 5,
+        
+    },
+    {
+        name: "battleship",
+        length: 4,
+    },
+    {
+        name: "cruiser",
+        length: 3,
+    },
+    {
+        name: "submarine",
+        length: 3,
+    },
+    {
+        name: "destroyer",
+        length: 2,
+    }
+    
+        
+    
 ]
 
-export const SHIP_LENGTH = {
-    carrier: 5,
-    battleship: 4,
-    cruiser: 3,
-    submarine: 3,
-    destroyer: 2,
-}
 

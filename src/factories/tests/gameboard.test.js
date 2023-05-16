@@ -1,3 +1,4 @@
+import { SHIP_TYPES } from "../../helpers/helpers";
 import Gameboard from "../gameboard";
 import Ship from "../ship";
 
@@ -40,20 +41,22 @@ describe("test gameboard creation", () => {
             expect(testBoard.checkCollisions([77, 87, 97, 107])).toBe(false);
         })
         test("returns location array of a ship", () => {
-            expect(testBoard.createLocationArray(23, Ship("destroyer"), "y")).toEqual([23, 33])
+            expect(testBoard.createLocationArray(23, SHIP_TYPES[4], "y")).toEqual([23, 33])
         })
-        /*test("render opponent board", () => {
+        test("render opponent board", () => {
             const arr = [];
+            const testBoard  = [];
             for (let i = 0; i < 100; i++) {
                 arr.push("empty");
+                testBoard.push({ hasShip: false, isShot: false });
             }
 
             testBoard[23] = {hasShip: true, isShot: true};
             testBoard[79] = {hasShip: false, isShot: true};
             arr[23] = "hit";
             arr[79] = "miss";
-            const newBoard = testBoard;
-            expect(testBoard.opponentBoard(newBoard)).toEqual(arr); 
-        })*/
+            const newBoard = new Gameboard(testBoard);
+            expect(newBoard.opponentBoard()).toEqual(arr); 
+        })
     })
 })
