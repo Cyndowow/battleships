@@ -4,8 +4,8 @@ describe("test ship creation", () => {
     let carrier;
     let submarine;
     beforeEach(() => {
-        carrier = new Ship("carrier", 5);
-        submarine = new Ship("submarine", 3);
+        carrier = new Ship(5);
+        submarine = new Ship(3);
         })
         test("has length", () => {
             expect(carrier.length).toBe(5)
