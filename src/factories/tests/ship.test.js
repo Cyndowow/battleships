@@ -4,27 +4,23 @@ describe("test ship creation", () => {
     let carrier;
     let submarine;
     beforeEach(() => {
-        carrier = new Ship("carrier", [0, 1, 2, 3, 4]);
-        submarine = new Ship("submarine", [12, 13, 14]);
+        carrier = new Ship("carrier", 5);
+        submarine = new Ship("submarine", 3);
         })
-        test("take hit on index 0", () => {
-            carrier.hit(0);
-            expect(carrier.hits).toEqual([0])
+        test("has length", () => {
+            expect(carrier.length).toBe(5)
         })
-        test("takes multiple hits", () => {
-            submarine.hit(12);
-            submarine.hit(13);
-            expect(submarine.hits).toEqual([12, 13]);
+        test("create ship tiles", () => {
+            expect(submarine.tiles).toEqual([0, 1, 2]);
         })
-        test("ship is not sunk", () => {
-            submarine.hit(12);
-            submarine.hit(13);
-            expect(submarine.isSunk()).toBe(false);
+        test("ship takes hits", () => {
+            submarine.hit(0);
+            expect(submarine.tiles[0]).toBe("hit");
         })
         test("ship is sunk", () => {
-            submarine.hit(12);
-            submarine.hit(13);
-            submarine.hit(14);
+            submarine.hit(0);
+            submarine.hit(1);
+            submarine.hit(2);
             expect(submarine.isSunk()).toBe(true);
         })
 })

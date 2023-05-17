@@ -1,18 +1,20 @@
-import {SHIP_LENGTH} from "../helpers/helpers"
-
 export default class Ship {
-    constructor(name, position) {
+    constructor(name, length) {
         this.name = name;
-        this.position = position;
-        this.hits = [];
+        this.length = length;
+        this.tiles = [...Array(length).keys()];
+        this.domTargets = [];
     }    
-    hit(index) {
-        this.hits.push(index);
+    hit(pos) {
+        if(this.tiles[pos] === "hit") return false;
+        this.tiles.splice(pos, 1, "hit");
     }
     isSunk() {
-        return this.position.every((positionCell) => 
-            this.hits.includes(positionCell)
-        )
+        let stilAlive = false;
+        this.tiles.forEach((e) => {
+            if(e !== "hit") stilAlive = true;
+        })
+        return stilAlive === true ? false : true;
     }
 }
 
