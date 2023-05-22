@@ -31,10 +31,29 @@ export default class Player {
         }
     }
 
-    /*placeShipsRandomly() {
+    placeShipRandomly(length) {
+
+        let pos1 = Math.floor(Math.random() * 10);
+        let pos2 = Math.floor(Math.random() * 10);
+        let dir = Math.round(Math.random());
+
+        if (dir === 0) {
+            dir = "h";
+            if (this.gameBoard.placeShip(pos1, pos2, length, dir) == false) return false;
+        }
+
+        if (dir === 1) {
+            dir = "v";
+            if (this.gameBoard.placeShip(pos1, pos2, length, dir) == false) return false;
+        }
+    }
+
+    placeRandomFleet() {
         this.createFleet();
         this.ships.forEach((ship) => {
-            this.gameBoard.randomPos
+            if (this.placeShipRandomly(ship.length) == false) {
+                this.placeShipRandomly(ship.length);
+            }
         })
-    }*/
+    }
 }

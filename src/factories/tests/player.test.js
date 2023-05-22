@@ -37,4 +37,9 @@ describe("player test", () => {
         console.log(player.ships);
         expect(player.ships).not.toBe(null);
     })
+    test("random placement of fleet", () => {
+        player.placeRandomFleet();
+        console.log(player.gameBoard);
+        expect(player.gameBoard).not.toBe(false);
+    })
 })
