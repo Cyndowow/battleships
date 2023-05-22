@@ -1,95 +1,100 @@
+import Ship from "./ship";
+
 export default class Gameboard {
-	constructor(board) {
-		this.board = board || [];
-		if (!this.board.length) this.create();
+	constructor() {
+		this.board = [];
+		this.isStartAllowed = false;
+		this.hasStarted = false;
+		this.create();
 	}
 
 	create() {
-		for (let i = 0; i < 100; i++) {
-			this.board.push({ hasShip: false, isShot: false });
-		}
-	}
-
-	receiveAttack(location) {
-		this.board[location].isShot = true;
-	}
-
-	checkIfAttackHit(location) {
-		// return true for hit, false for miss
-		return this.board[location].hasShip;
-	}
-
-	createLocationArray(location, ship, axis) {
-		const locationArray = [];
-		for (let i = 0; i < ship.length; i++) {
-			axis === 'x'
-				? locationArray.push(location + i)
-				: locationArray.push(location + i * 10);
-		}
-		return locationArray;
-	}
-
-	checkCollisions(locationArray) {
-		// on x axis, stops from going out of bounds
-		const collisions = [9, 19, 29, 39, 49, 59, 69, 79, 89];
-		if (locationArray.some((loc) => !this.board[loc])) {
-			// check if ship placement exceeds board boundaries, which covers y axis
-			return false;
-		} else if (locationArray.some((loc) => this.board[loc].hasShip)) {
-			// check for collisions with other ships
-			return false;
-		} else if (
-			collisions.some((num) => {
-				return [num, num + 1].every((combination) =>
-					locationArray.includes(combination)
-				);
-			})
-		) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	findRandomShipLocation(ship) {
-		// get a random axis
-		const randomAxis = () => ['x', 'y'][Math.floor(Math.random() * 2)];
-		// return a location array that will fit this ship
-		const findSuitableLocation = (axis) => {
-			const possibleLocationArrays = [];
-			for (let i = 0; i < 100 - ship.length; i++) {
-				// make every possible location the ship can exist as an array
-				let locationArray = [];
-				if (axis === 'x') {
-					for (let count = 0; count < ship.length; count++) {
-						locationArray.push(i + count);
-					}
-				} else {
-					for (let count = 0; count < ship.length; count++) {
-						locationArray.push(i + count * 10);
-					}
-				}
-				// test if this location will work, if so, push to the collection of possibilities
-				if (this.checkCollisions(locationArray)) {
-					possibleLocationArrays.push(locationArray);
-				}
+		for (let i = 0; i < 10; i++) {
+			this.board[i] = [];
+			for (let j = 0; j <10; j++) {
+				this.board[i].push(false);
 			}
-			// return a random choice
-			return possibleLocationArrays[
-				Math.floor(Math.random() * possibleLocationArrays.length)
-			];
-		};
-		return findSuitableLocation(randomAxis());
+		}
 	}
-	
-	// this returns a version of the game board that represents what the opponent is allowed to see
-	opponentBoard() {
-		return this.board.map((cell) => {
-			return cell.isShot && cell.hasShip
-				? 'hit'
-				: cell.isShot
-				? 'miss'
-				: 'empty';
-		});
+
+	receiveAttack(pos1, pos2) {
+		if (this.board[pos1][pos2] === "miss") return false;
+		if (
+			typeof this.board[pos1][pos2] == "object" &&
+			this.board[pos1][pos2].ship.tiles[this.board[pos1][pos2].shipPos] === "hit"
+		) return false;
+
+		if(!this.board[pos1][pos2] || this.board[pos1][pos2] === "res") {
+			this.board[pos1][pos2] = "miss";
+			return this.board[pos1][pos2];
+		} else {
+			this.board[pos1][pos2].ship.hit(this.board[pos1][pos2].shipPos);
+			return this.board[pos1][pos2].ship.tiles[this.board[pos1][pos2].shipPos];
+		}
 	}
+
+	placeShip(pos1, pos2, shiplength, dir) {
+		if (this.board[pos1][pos2]) return false;
+		let ship = new Ship(shiplength);
+		let shipPos = 0;
+
+		if (dir === "h") {
+			if (pos2 + ship.length > 10) return false;
+
+			for (let i = 0; i < shiplength; i++) {
+				if (this.board[pos1][pos2 + i] === "res") return false;
+			}
+
+			for (let i = pos2; i < pos2 + ship.length; i++) {
+				this.board[pos1].splice(i, 1, { ship, shipPos });
+				this.reserveAround(pos1, pos2 + shipPos);
+				shipPos++;
+			}
+		}
+		if (dir === "v") {
+			if(pos1 + ship.length > 10) return false;
+
+			for (let i = 0; i < shiplength; i++) {
+				if (this.board[pos1 + i][pos2] === "res") return false;
+			}
+
+			for (let i = pos1; i < pos1 + ship.length; i++) {
+				this.board[i].splice(pos2, 1, {ship, shipPos});
+				this.reserveAround(pos1 + shipPos, pos2);
+				shipPos++;
+			}
+		}
+	}
+
+	reserveAround(pos1, pos2) {
+		let board = this.board;
+		function cell(n1, n2) {
+			if(pos1 + n1 > 9 || pos1 + n1 < 0) return;
+			if(board[pos1 + n1][pos2+n2] === false) board[pos1 + n1][pos2+n2] = "res";
+		}
+		function reserveCell(row) {
+			cell(row, -1);
+			cell(row, 0);
+			cell(row, 1);
+		}
+		reserveCell(-1);
+		reserveCell(0);
+		reserveCell(1);
+	}
+
+	isSunk(pos1, pos2) {
+		return this.board[pos1][pos2].ship.isSunk() === true ? true : false;
+
+	}
+   	areAllSunk = (board) => {
+    	let notSunk = false;
+    	for (let i = 0; i < 10; i++)
+      		board[i].forEach((e) => {
+        		if (!e || e === "miss" || e === "res") return;
+        		if (e.ship.isSunk() === false) notSunk = true;
+     	});
+    	return notSunk === true ? false : true;
+  	};
 }
+
+
