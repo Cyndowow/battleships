@@ -17,6 +17,10 @@ describe("test ship creation", () => {
             submarine.hit(0);
             expect(submarine.tiles[0]).toBe("hit");
         })
+        test("ship is alive", () => {
+        submarine.hit(0);
+        expect(submarine.isSunk()).toBe(false);
+        })
         test("ship is sunk", () => {
             submarine.hit(0);
             submarine.hit(1);

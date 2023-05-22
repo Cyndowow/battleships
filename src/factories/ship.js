@@ -9,11 +9,11 @@ export default class Ship {
         this.tiles.splice(pos, 1, "hit");
     }
     isSunk() {
-        let stilAlive = false;
+        let stillAlive = false;
         this.tiles.forEach((e) => {
-            if(e !== "hit") stilAlive = true;
+            if(e !== "hit") stillAlive = true;
         })
-        return stilAlive === true ? false : true;
+        return stillAlive === true ? false : true;
     }
 }
 
