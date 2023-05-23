@@ -6,6 +6,6 @@ import { initGame } from "./DOM/game";
 const startButton = document.getElementById("start");
 
 
-startButton.addEventListener("click", () => initGame());
+window.addEventListener("DOMContentLoaded", () => initGame());
 
 //startButton.addEventListener("click", () => renderBoards())

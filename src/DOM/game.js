@@ -1,5 +1,5 @@
 import Player from "../factories/player";
-import { renderBoards} from "./renderFunction";
+import { renderBoards, renderButtons} from "./renderFunction";
 
 let p1, p2;
 
@@ -11,6 +11,7 @@ function initGame() {
     //p2.placeRandomFleet();
 
     renderBoards(p1, p2);
+    renderButtons(p1);
 }
 
 export {initGame, p1, p2};

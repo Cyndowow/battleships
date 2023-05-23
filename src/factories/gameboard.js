@@ -25,6 +25,14 @@ export default class Gameboard {
 		this.isStartAllowed = value;
 	}
 
+	getHasStarted() {
+		return this.hasStarted;
+	}
+
+	setHasStarted(value) {
+		this.hasStarted = value;
+	}
+
 	receiveAttack(pos1, pos2) {
 		if (this.board[pos1][pos2] === "miss") return false;
 		if (
