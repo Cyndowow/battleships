@@ -1,5 +1,4 @@
 import Gameboard from "../gameboard";
-import Ship from "../ship";
 
 
 describe("gameboard tests", () => {
@@ -59,5 +58,13 @@ describe("gameboard tests", () => {
       g.receiveAttack(0, 4);
       g.receiveAttack(0, 5);
     expect(g.areAllSunk(g.board)).toBeTruthy();
+    })
+
+    test("return start allowed", () => {
+        expect(g.getStartAllowed()).toBe(false);
+    })
+    test("set start allowed", () => {
+        g.setStartAllowed(true);
+        expect(g.getStartAllowed()).toBe(true);
     })
 })
