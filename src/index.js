@@ -1,10 +1,11 @@
 import Gameboard from "./factories/gameboard";
 import { renderBoards } from "./DOM/renderFunction";
+import { initGame } from "./DOM/game";
 
-const gameboard = new Gameboard("Player");
-
-const container = document.getElementById("playerBoard");
 
 const startButton = document.getElementById("start");
 
-startButton.addEventListener("click", () => renderBoards())
+
+startButton.addEventListener("click", () => initGame());
+
+//startButton.addEventListener("click", () => renderBoards())

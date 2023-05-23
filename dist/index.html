@@ -10,11 +10,24 @@
 <body>
     <header>
         <h1>Battleships</h1>
+        <div class="menu">
+            <span class="home-btn header-btn">Home</span>
+            <span class="htp-btn header-btn">How to play</span>
+        </div>
     </header>
     <div id="game-container">
-        <div id="playerBoard" class="grid"></div>
-        <div id="enemyBoard" class="grid"></div>
-
+        <div class="player-container">
+            <h3>Your board</h3>
+            <div id="playerBoard" class="board"></div>
+            <div class="board-buttons"></div>
+            <div class="ships"></div>
+        </div>
+        <div class="enemy-container">
+            <h3>Enemy board</h3>
+            <div id="enemyBoard" class="board not-started"></div>
+        </div>
+    </div>
+    <div class="misc">
         <button id="start">Start Game</button>
     </div>
     <footer>
@@ -22,4 +35,4 @@
     </footer>
 </body>
 </html>
-<script src="main.js"></script>
+<script src="main.js" defer></script>
