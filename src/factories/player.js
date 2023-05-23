@@ -18,6 +18,14 @@ export default class Player {
         enemy.turn = false;
     }
 
+    getTurn() {
+        return this.turn;
+    }
+
+    setTurn(value) {
+        this.turn = value;
+    }
+
     randomPos() {
         let pos1 = Math.floor(Math.random() * 10);
         let pos2 = Math.floor(Math.random() * 10);
@@ -55,5 +63,6 @@ export default class Player {
                 this.placeShipRandomly(ship.length);
             }
         })
+        this.gameBoard.setStartAllowed(true);
     }
 }

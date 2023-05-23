@@ -42,4 +42,12 @@ describe("player test", () => {
         console.log(player.gameBoard);
         expect(player.gameBoard).not.toBe(false);
     })
+    test("return turn", () => {
+        console.log(player.getTurn());
+        expect(player.getTurn()).toBe(false);
+    })
+    test("set turn", () => {
+        player.setTurn(true);
+        expect(player.getTurn()).toBe(true);
+    })
 })
