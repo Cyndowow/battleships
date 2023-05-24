@@ -1,5 +1,6 @@
 import { initGame, p1, p2} from "./game"
 import {shipDrag} from "./draganddrop"
+import {aiPlay, getWasHit, setWasHit, surroundingPos} from "./botAI"
 
 
 function renderBoards(p1, p2) {
