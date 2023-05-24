@@ -42,6 +42,7 @@ function resetBoards() {
     document.querySelector(".board-buttons").innerHTML = "";
     document.querySelector(".ships").innerHTML = "";
     document.querySelectorAll(".board").forEach((board) => (board.innerHTML = ""));
+    document.querySelector("#start").remove();
     initGame();
 }
 
@@ -73,13 +74,13 @@ function renderButtons(player) {
     })
 
     //random Fleet for Player
-    //document.querySelector("main-random").addEventListener("click", () => {
-        //resetBoards();
-        //p1.placeRandomFleet();
-        ////renderPlayerFleet(p1);
-        //p1.setStartAllowed(true);
-        //document.querySelector(".ships").innerHTML = "";
-    //})
+    document.querySelector(".main-random").addEventListener("click", () => {
+        resetBoards();
+        p1.placeRandomFleet();
+        renderPlayerFleet(p1);
+        p1.gameBoard.setStartAllowed(true);
+        document.querySelector(".ships").innerHTML = "";
+    })
 
     
     document.getElementById("start").addEventListener("click", (e) => {
@@ -250,12 +251,14 @@ function delay(delayInMs) {
 }
 
 function createDragAndDropFleet(player) {
+    renderShipSelection(1, 1)
     renderShipSelection(2, 2);
-    renderShipSelection(3, 3);
+    //renderShipSelection(3, 3);
     renderShipSelection(3, 3);
     renderShipSelection(4, 4);
     renderShipSelection(5, 5);
-
+    //renderShipSelection(6, 6);
+    
     function renderShipSelection(i, length) {
         const container = document.querySelector(".ships");
         const shipContainer = document.createElement("div");
@@ -278,7 +281,7 @@ function createDragAndDropFleet(player) {
             ship.appendChild(cell);
         }
     }
-
+    
     for (let i = 1; i < 5; i++) shipDrag(player, `.ship-${i}`);
 }
 
