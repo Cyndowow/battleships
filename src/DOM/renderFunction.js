@@ -1,4 +1,5 @@
 import { initGame, p1, p2} from "./game"
+import {shipDrag} from "./draganddrop"
 
 
 function renderBoards(p1, p2) {
@@ -59,10 +60,10 @@ function renderButtons(player) {
         const startBtn = document.createElement("button");
         startBtn.innerText = "Start";
         startBtn.setAttribute("id", "start");
-        misc.appendChild(startBtn);
 
     boardButtons.appendChild(rand);
     boardButtons.appendChild(reset);
+    misc.appendChild(startBtn);
 
     //reset board
     document.querySelector(".main-reset").addEventListener("click", () => {
@@ -187,11 +188,105 @@ function renderWin(player) {
     })
 }
 
+async function renderHowToPlay() {
+    const game = document.querySelector(".game-container");
+    const howToPlay = document.querySelector(".how-to-play");
+    const startBtn = document.querySelector("#start");
+    game.classList.toggle("active");
+    await delay(200);
+    game.style.display = "none";
+    howToPlay.style.display = "flex";
+    startBtn.style.display = "none";
+    await delay(200);
+    howToPlay.classList.toggle("active");
+
+    window.location.href = "#how-to-play"
+}
+
+async function renderGame() {
+    const game = document.querySelector(".game-container");
+    const howToPlay = document.querySelector(".how-to-play");
+    const startBtn = document.querySelector("#start");
+    howToPlay.classList.toggle("active");
+    await delay(500);
+
+    startBtn.style.display = "flex";
+    howToPlay.style.display = "none";
+    game.style.display = "flex";
+    await delay(500);
+
+    game.classList.toggle("active");
+
+    window.location.href = "#game";
+}
+
+function initHeaderButtons() {
+    const gameBtn = document.querySelector(".game-btn");
+    const htpBtn = document.querySelector(".htp-btn");
+    let gameActive = true;
+    let htpActive = false;
+
+    htpBtn.addEventListener("click", () => {
+        if (htpActive) return;
+        htpActive = true;
+        gameActive = false;
+        renderHowToPlay();
+    })
+    gameBtn.addEventListener("click", () => {
+        if (gameActive) return;
+        gameActive = true;
+        htpActive = false;
+        renderGame();
+    })
+}
+
+function delay(delayInMs) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(2);
+        }, delayInMs);
+    });
+}
+
+function createDragAndDropFleet(player) {
+    renderShipSelection(2, 2);
+    renderShipSelection(3, 3);
+    renderShipSelection(3, 3);
+    renderShipSelection(4, 4);
+    renderShipSelection(5, 5);
+
+    function renderShipSelection(i, length) {
+        const container = document.querySelector(".ships");
+        const shipContainer = document.createElement("div");
+        shipContainer.classList.add("ship-container");
+        container.appendChild(shipContainer);
+
+        const shipInfo = document.createElement("span");
+        shipInfo.classList.add(`info-${i}`);
+        shipContainer.appendChild(shipInfo);
+
+        const ship = document.createElement("div");
+        ship.classList.add("ship");
+        ship.classList.add(`ship-${i}`);
+        ship.setAttribute("draggable", "true");
+        shipContainer.appendChild(ship);
+
+        for(let i = 0; i < length; i++) {
+            const cell = document.createElement("div");
+            cell.classList.add("ship-cell");
+            ship.appendChild(cell);
+        }
+    }
+
+    for (let i = 1; i < 5; i++) shipDrag(player, `.ship-${i}`);
+}
+
 export {
     renderBoards,
     resetBoards,
     renderButtons,
     renderPlayerFleet,
     renderAttackP2,
-    renderWin
+    initHeaderButtons,
+    createDragAndDropFleet
 }
