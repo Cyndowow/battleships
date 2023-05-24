@@ -95,11 +95,103 @@ function renderButtons(player) {
 }
 
 function renderPlayerFleet(player) {
+    document.querySelectorAll(".cell-p1").forEach((e, i) => {
+        let pos1, pos2;
+        let pos = "" + i;
 
+        //transform index string to array [pos1, pos2]
+        if (i < 10) {
+            pos1 = 0;
+            pos2 = i;
+        } else {
+            pos = pos.split("");
+            pos1 = pos[0];
+            pos2 = pos[1];
+        }
+
+        if(!player.gameBoard.board[pos1][pos2]) return;
+        if(player.gameBoard.board[pos1][pos2] === "res") e.classList.add("res");
+        else e.classList.add("fleet");
+    })
+}
+
+async function renderAttackP1(e, pos1, pos2, p1, p2) {
+    document.getElementById("enemyBoard").classList.toggle("current-turn");
+    let attack = p1.fireShot(p2, pos1, pos2);
+    if(!attack) return; //doesnt use turn if tile already attacked
+    if(attack === "miss") e.target.classList.add("miss");
+    if(attack === "hit") {
+        e.target.classList.add("hit");
+        p2.gameBoard.board[pos1][pos2].ship.domTargets.push(e.target);
+        //checks if ship is sunk and adds class if true
+        if(p2.gameBoard.board[pos1][pos2].ship.isSunk())
+            p2.gameBoard.board[pos1][pos2].ship.domTargets.forEach((e) => 
+                e.classList.add("sunk")
+            );
+        return;
+    }
+    p2.isTurn(p1);
+
+    await delay(1500);
+    //switch to next player or end if all ships are sunk
+    return p2.gameBoard.areAllSunk(p2.gameBoard.board) === true ? renderWin(p1) : aiPlay(false, p1, p2);
+}
+
+async function renderAttackP2(p1, p2, pos1, pos2) {
+    let isSunk = false;
+    let e = document.getElementById(`p2-row${pos1}-cell${pos2}`);
+    let attack = p2.fireShot(p1, pos1, pos2);
+
+    if(!attack) {
+        let repeat = true;
+        aiPlay(repeat, p1, p2);
+    }
+    if(attack === "miss") {
+        setWasHit(false);
+        e.classList.add("miss");
+    }
+    if(attack === "hit") {
+        setWasHit(true, true, pos1, pos2);
+        e.classList.add("hit");
+        p1.gameBoard.board[pos1][pos2].ship.domTargets.push(e);
+
+        //check if sunk
+        if(p1.gameBoard.board[pos1][pos2].ship.isSunk()) {
+            p1.gameBoard.board[pos1][pos2].ship.domTargets.forEach((e) => 
+            e.classList.add("sunk")
+            );
+            isSunk = true;
+            if(p1.gameBoard.areAllSunk(p1.gameBoard.board) === true) return renderWin(p2);
+        }
+        await delay(1500)
+        return aiPlay(false, p1, p2, isSunk);
+    }
+
+    p1.isTurn(p2); //give turn to p1
+}
+
+function renderWin(player) {
+    const dialog = document.querySelector(".winning-dialog");
+    const restartBtn = document.querySelector(".restart");
+    const closeDialog = document.querySelector(".close");
+    const winText = document.querySelector(".win-text");
+
+    winText.textContent = player.name + " won the game!";
+    dialog.showModal();
+    restartBtn.addEventListener("click", () => {
+        dialog.close();
+        resetBoards();
+    })
+    closeDialog.addEventListener("click", () => {
+        dialog.close();
+    })
 }
 
 export {
     renderBoards,
     resetBoards,
     renderButtons,
+    renderPlayerFleet,
+    renderAttackP2,
+    renderWin
 }
