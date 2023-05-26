@@ -32,11 +32,11 @@ describe("player test", () => {
         opp.isTurn(player);
         expect(player.turn).toBe(false);
     })
-    test("fleet creation", () => {
+    /*test("fleet creation", () => {
         player.createFleet();
         console.log(player.ships);
         expect(player.ships).not.toBe(null);
-    })
+    })*/
     test("random placement of fleet", () => {
         player.placeRandomFleet();
         console.log(player.gameBoard);

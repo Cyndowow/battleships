@@ -49,15 +49,15 @@ export default class Gameboard {
 		}
 	}
 
-	placeShip(pos1, pos2, shiplength, dir) {
+	placeShip(pos1, pos2, length, dir) {
 		if (this.board[pos1][pos2]) return false;
-		let ship = new Ship(shiplength);
+		let ship = new Ship(length);
 		let shipPos = 0;
 
 		if (dir === "h") {
 			if (pos2 + ship.length > 10) return false;
 
-			for (let i = 0; i < shiplength; i++) {
+			for (let i = 0; i < length; i++) {
 				if (this.board[pos1][pos2 + i] === "res") return false;
 			}
 
@@ -70,7 +70,7 @@ export default class Gameboard {
 		if (dir === "v") {
 			if(pos1 + ship.length > 10) return false;
 
-			for (let i = 0; i < shiplength; i++) {
+			for (let i = 0; i < length; i++) {
 				if (this.board[pos1 + i][pos2] === "res") return false;
 			}
 

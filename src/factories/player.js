@@ -4,7 +4,7 @@ import Ship from "./ship";
 export default class Player {
     constructor(name) {
         this.name = name;
-        this.ships = [];
+//        this.ships = [];
         this.gameBoard = new Gameboard();
         this.turn = false;
     }
@@ -32,12 +32,13 @@ export default class Player {
         return [pos1, pos2];
     }
 
-    createFleet() {
-        const shipLengthArray = [2, 3, 3, 4, 5];
+    /*createFleet() {
+        this.ships = [];
+        const shipLengthArray = [1, 2, 3, 4, 5]; //[2, 3, 3, 4, 5]
         for (const length of shipLengthArray) {
             this.ships.push(new Ship(length));
         }
-    }
+    }*/
 
     placeShipRandomly(length) {
 
@@ -47,22 +48,36 @@ export default class Player {
 
         if (dir === 0) {
             dir = "h";
-            if (this.gameBoard.placeShip(pos1, pos2, length, dir) == false) return false;
+            if (this.gameBoard.placeShip(pos1, pos2, length, dir) === false) return false;
         }
 
         if (dir === 1) {
             dir = "v";
-            if (this.gameBoard.placeShip(pos1, pos2, length, dir) == false) return false;
+            if (this.gameBoard.placeShip(pos1, pos2, length, dir) === false) return false;
         }
     }
 
     placeRandomFleet() {
-        this.createFleet();
-        this.ships.forEach((ship) => {
-            if (this.placeShipRandomly(ship.length) == false) {
-                this.placeShipRandomly(ship.length);
+            for (let i = 0; i < 1; ) {
+              if (this.placeShipRandomly(1) == false) continue;
+              i++;
             }
-        })
+            for (let i = 0; i < 1; ) {
+              if (this.placeShipRandomly(2) == false) continue;
+              i++;
+            }
+            for (let i = 0; i < 1; ) {
+              if (this.placeShipRandomly(3) == false) continue;
+              i++;
+            }
+            for (let i = 0; i < 1; ) {
+              if (this.placeShipRandomly(4) == false) continue;
+              i++;
+            }
+            for (let i = 0; i < 1; ) {
+                if (this.placeShipRandomly(5) == false) continue;
+                i++;
+              }
         this.gameBoard.setStartAllowed(true);
     }
 }
