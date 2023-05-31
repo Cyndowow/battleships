@@ -11,11 +11,11 @@
     <header>
         <h1>Battleships</h1>
         <div class="menu">
-            <span class="home-btn header-btn">Home</span>
+            <span class="game-btn header-btn">Game</span>
             <span class="htp-btn header-btn">How to play</span>
         </div>
     </header>
-    <div id="game-container">
+    <div class="game-container">
         <div class="player-container">
             <h3>Your board</h3>
             <div id="playerBoard" class="board"></div>
@@ -28,8 +28,51 @@
         </div>
     </div>
     <div class="misc">
-        <!--<button id="start">Start Game</button> -->
     </div>
+
+    <div class="winning-screen">
+        <dialog class="winning-dialog">
+            <h1 class="win-text"></h1>
+            <button class="restart">Restart</button>
+            <button class="close">Close</button>
+        </dialog>
+    </div>
+
+    <section class="how-to-play">
+        <h1>How to play Battleships</h1>
+        <div class="htp-container">
+            <div class="rules">
+                <h2>Rules</h2>
+                <p>
+                    The objective of Battleships is to sink every ship of your opponent, before your ships are sunk. 
+                    Players take turns firing at each others boards in attempt to hit an enemy ship.
+                </p>
+                <p>
+                    Both players cant see the enemy ships. You need to guess where they are at.
+                </p>
+                <p>
+                    When a player hits a ship, they can fire again until they miss a shot.
+                </p>
+                <p>
+                    The first player to sink all enemy ships wins the game!
+                </p>
+            </div>
+            <div class="controls">
+                <h2>Controls</h2>
+                <p>Before being able to start the game you need to place all your Ships on the board. To do this you can either:</p>
+                <ul>
+                    <li>
+                        <b>Drag and drop</b> the ships on to the board
+                        <i>(single click to rotate them)</i>
+                    </li>
+                    <li>
+                        Press <b>random</b> to place your ships randomly
+                    </li>
+                </ul>
+                <p>Once all ships are placed press the <b>start</b> button to start the game.</p>
+            </div>
+        </div>
+    </section>
     <footer>
 
     </footer>
