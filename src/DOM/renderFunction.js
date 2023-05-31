@@ -15,12 +15,6 @@ function renderBoards(p1, p2) {
             cell.classList.add("cell-p1");
             cell.setAttribute("id", `p1-row${i}-cell${j}`);
             row.appendChild(cell);
-
-            //event listener for clicks on p2 board
-            cell.addEventListener("click", (e) => {
-                if(!p1.getTurn() || !p1.gameBoard.getStartAllowed()) return;
-                renderAttackP1(e, i, j, p1, p2);
-            });
         });
     }
     for (let i = 0; i < 10; i++) {
@@ -29,11 +23,18 @@ function renderBoards(p1, p2) {
         row.setAttribute("id", `p2-row${i}`);
         document.getElementById("enemyBoard").appendChild(row);
         
-        p1.gameBoard.board[i].forEach((e, j) => {
+        p2.gameBoard.board[i].forEach((e, j) => {
             let cell = document.createElement("div");
             cell.classList.add("cell-p2");
             cell.setAttribute("id", `p2-row${i}-cell${j}`);
             row.appendChild(cell);
+
+
+            //event listener for clicks on p2 board
+            cell.addEventListener("click", (e) => {
+                if(!p1.getTurn() || !p1.gameBoard.getStartAllowed()) return;
+                renderAttackP1(e, i, j, p1, p2);
+            });
         })
     }
 }
@@ -171,7 +172,7 @@ async function renderAttackP2(p1, p2, pos1, pos2) {
         return aiPlay(false, p1, p2, isSunk);
     }
 
-    p1.isTurn(p2); //give turn to p1
+    p1.isTurn(p2); //give turn to p2
 }
 
 function renderWin(player) {

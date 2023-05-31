@@ -4,7 +4,6 @@ import Ship from "./ship";
 export default class Player {
     constructor(name) {
         this.name = name;
-//        this.ships = [];
         this.gameBoard = new Gameboard();
         this.turn = false;
     }
@@ -31,14 +30,6 @@ export default class Player {
         let pos2 = Math.floor(Math.random() * 10);
         return [pos1, pos2];
     }
-
-    /*createFleet() {
-        this.ships = [];
-        const shipLengthArray = [1, 2, 3, 4, 5]; //[2, 3, 3, 4, 5]
-        for (const length of shipLengthArray) {
-            this.ships.push(new Ship(length));
-        }
-    }*/
 
     placeShipRandomly(length) {
 

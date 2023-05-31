@@ -30,7 +30,7 @@ function registerSurroundingPos(pos1, pos2) {
 }
 
 function aiPlay(repeat, p1, p2, isSunk) {
-    let pos, pos1, pos2;
+    let pos//, pos1, pos2;*/
     if(isSunk === true) {
         lasHitPos = [];
         firstHitPos = [];
