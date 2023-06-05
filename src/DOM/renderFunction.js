@@ -160,7 +160,6 @@ async function renderAttackP2(p1, p2, pos1, pos2) {
         e.classList.add("hit");
         p1.gameBoard.board[pos1][pos2].ship.domTargets.push(e);
 
-        //check if sunk
         if(p1.gameBoard.board[pos1][pos2].ship.isSunk()) {
             p1.gameBoard.board[pos1][pos2].ship.domTargets.forEach((e) => 
             e.classList.add("sunk")
